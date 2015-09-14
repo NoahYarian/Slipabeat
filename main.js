@@ -7,64 +7,57 @@ var leftToeSound    = document.querySelector('#left-toe-sound'),
     leftToeSelect   = document.querySelector('#left-toe'),
     rightToeSelect  = document.querySelector('#right-toe'),
     leftHeelSelect  = document.querySelector('#left-heel'),
-    rightHeelSelect = document.querySelector('#right-heel'),
-    SERIAL          = chrome.serial,
-    serialObj       = {},
-    connectionInfo,
-    connectionId;
+    rightHeelSelect = document.querySelector('#right-heel')
+    // ,
+//     SERIAL          = chrome.serial,
+//     serialObj       = {},
+//     connectionInfo,
+//     connectionId;
 
 
 
-function onGetDevices (ports) {
-  chrome.serial.connect(ports[5].path, function onConnect(info) {
-    connectionId = info.connectionId;
-    connectionInfo = info;
-  });
-}
+// function onGetDevices (ports) {
+//   chrome.serial.connect(ports[5].path, function onConnect(info) {
+//     connectionId = info.connectionId;
+//     connectionInfo = info;
+//   });
+// }
 
-var str = '';
+// var str = '';
 
-function onReceiveCallback (arrayBuffer) {
-  if (!!str.match(/'/g) && str.match(/'/g).length === 2) {
-    console.log(str);
-    serialObj = JSON.parse(str.replace(/'/g, ''));
-    str = '';
-    if (serialObj.TOE_LEFT === 1) {
-      leftToeSound.load();
-      leftToeSound.play();
-    } else if (serialObj.TOE_RIGHT === 1) {
-      rightToeSound.load();
-      rightToeSound.play();
-    } else if (serialObj.HEEL_LEFT === 1) {
-      leftHeelSound.load();
-      leftHeelSound.play();
-    } else if (serialObj.HEEL_RIGHT === 1) {
-      rightHeelSound.load();
-      rightHeelSound.play();
-    }
-  }
-  var u8view = new Uint8Array(arrayBuffer.data);
-  for (var i = 0, len = u8view.length; i < len; i++) {
-    str += String.fromCharCode(u8view[i]);
-  }
-}
+// function onReceiveCallback (arrayBuffer) {
+//   if (!!str.match(/'/g) && str.match(/'/g).length === 2) {
+//     console.log(str);
+//     serialObj = JSON.parse(str.replace(/'/g, ''));
+//     str = '';
+//     if (serialObj.TOE_LEFT === 1) {
+//       leftToeSound.load();
+//       leftToeSound.play();
+//     } else if (serialObj.TOE_RIGHT === 1) {
+//       rightToeSound.load();
+//       rightToeSound.play();
+//     } else if (serialObj.HEEL_LEFT === 1) {
+//       leftHeelSound.load();
+//       leftHeelSound.play();
+//     } else if (serialObj.HEEL_RIGHT === 1) {
+//       rightHeelSound.load();
+//       rightHeelSound.play();
+//     }
+//   }
+//   var u8view = new Uint8Array(arrayBuffer.data);
+//   for (var i = 0, len = u8view.length; i < len; i++) {
+//     str += String.fromCharCode(u8view[i]);
+//   }
+// }
 
-function onReceiveErrorCallback (info) {
-  console.log(info);
-}
-
-
-SERIAL.getDevices(onGetDevices);
-SERIAL.onReceive.addListener(onReceiveCallback);
-SERIAL.onReceiveError.addListener(onReceiveErrorCallback);
+// function onReceiveErrorCallback (info) {
+//   console.log(info);
+// }
 
 
-
-
-
-
-
-
+// SERIAL.getDevices(onGetDevices);
+// SERIAL.onReceive.addListener(onReceiveCallback);
+// SERIAL.onReceiveError.addListener(onReceiveErrorCallback);
 
 
 leftToeSelect.onchange = function() {
